@@ -1,0 +1,33 @@
+# .NET
+bin/
+obj/
+
+# Visual Studio
+.vs
+.vscode/
+*.user
+*.suo
+*.suo
+*.log
+*.vs2019/
+*.dll
+*.exe
+*.pdb
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
