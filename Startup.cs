@@ -16,11 +16,22 @@ namespace shop_backend
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigin",
+                    builder => builder.WithOrigins("http://localhost:3000")
+                                      .AllowAnyMethod()
+                                      .AllowAnyHeader()
+                                      .AllowCredentials());
+            });
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("AllowOrigin");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -30,10 +41,7 @@ namespace shop_backend
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
         }
     }
