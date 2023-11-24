@@ -1,19 +1,31 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using shop_backend.Database;
+using shop_backend.Database.Seeding;
+using shop_backend.Database.Seeding.Interfaces;
+using shop_backend.Database.Seeding.Seeders;
+//using System;
+//using System.Collections.Generic;
+//using System.Data;
+//using System.Linq;
+//using System.Threading.Tasks;
 
 namespace shop_backend
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public IConfiguration Configuration { get; }
+
+        public Startup (IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
@@ -24,13 +36,30 @@ namespace shop_backend
                                       .AllowAnyHeader()
                                       .AllowCredentials());
             });
+
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<ShopDbContext>(options =>
+            {
+                options.UseMySql(connection, ServerVersion.AutoDetect(connection));
+            });
+
+            services.AddTransient<ISeeder, UserRolesSeeder>();
+            services.AddTransient<ISeeder, UserSeeder>();
+
+            services.AddTransient<SeederFactory>();
+
             services.AddControllers();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeederFactory seederFactory)
         {
             app.UseCors("AllowOrigin");
+
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ShopDbContext>();
+                seederFactory.SeedAll(context);
+            }
 
             if (env.IsDevelopment())
             {
