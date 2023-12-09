@@ -1,4 +1,6 @@
-﻿namespace shop_backend.Models
+﻿using System;
+
+namespace shop_backend.Models
 {
     public class User
     {
@@ -16,10 +18,11 @@
 
         public string Password { get; set; }
 
+        public string? RefreshToken { get; set; }
+
         // --------------- Связи --------------- //
         public int UserRoleId { get; set; }
 
         public UserRole UserRole { get; set; }
-
     }
 }

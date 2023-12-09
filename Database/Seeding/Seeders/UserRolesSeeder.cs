@@ -9,18 +9,23 @@ namespace shop_backend.Database.Seeding.Seeders
     {
         public void Seed(ShopDbContext context)
         {
-            if (!context.UserRoles.Any())
+            if (!context.userRoles.Any())
             {
                 List<UserRole> roles = new List<UserRole>
                 {
                     new UserRole
                     {
                         Id = 1,
-                        Name = "Администратор",
+                        Name = "admin",
+                    },
+                    new UserRole
+                    {
+                        Id= 2,
+                        Name = "customer",
                     }
                 };
 
-                context.UserRoles.AddRange(roles);
+                context.userRoles.AddRange(roles);
                 context.SaveChanges();
             }
         }
