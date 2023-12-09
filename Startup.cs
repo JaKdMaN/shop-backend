@@ -1,11 +1,15 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using shop_backend.Database.Seeding;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using shop_backend.Configurations;
 using shop_backend.Database;
-using shop_backend.Database.Seeding;
+using System.Text;
+using System;
 
 namespace shop_backend
 {
@@ -20,8 +24,10 @@ namespace shop_backend
 
         public void ConfigureServices(IServiceCollection services)
         {
-            CorsConfiguration.Configure(services);
             DatabaseConfiguration.Configure(services, Configuration);
+            AuthConfiguration.Configure(services, Configuration);
+            CookiConfiguration.Configure(services);
+            CorsConfiguration.Configure(services);
             ServicesConfiguration.Configure(services);
         }
 
@@ -39,6 +45,10 @@ namespace shop_backend
                 app.UseDeveloperExceptionPage();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }

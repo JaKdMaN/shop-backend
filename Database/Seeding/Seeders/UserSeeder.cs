@@ -1,4 +1,5 @@
 ﻿using shop_backend.Database.Seeding.Interfaces;
+using shop_backend.Helpers;
 using shop_backend.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace shop_backend.Database.Seeding.Seeders
         {
             if (!context.users.Any())
             {
+
                 List<User> users = new List<User>
                 {
                     new User 
@@ -20,7 +22,7 @@ namespace shop_backend.Database.Seeding.Seeders
                         Surname = "Потапов",
                         Patronymic = "Андреевич",
                         Email = "admin@example.com",
-                        Password = "Password-1",
+                        Password = HashPasswordHelper.HashPassword("Password-1"),
                         UserRoleId = 1,
                     }
                 };

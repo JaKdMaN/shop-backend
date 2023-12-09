@@ -1,0 +1,72 @@
+﻿openapi: 3.0.0
+info: 
+  title: API для интернет-магазина XWEAR
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:44335/api/'
+    description: Тестовая среда
+
+tags:
+  - name: Авторизация
+  - name: Профиль пользователя
+  - name: Пользователи  
+  
+paths:
+  #<editor-fold defaultstate="collapsed" desc="Профиль пользователя">
+  /me:
+    get:
+      summary: Получить данные авторизованного пользователя
+      tags:
+        - Профиль пользователя
+      security:
+        - SPAAuthentication: []
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResource'
+
+components:
+  schemas:
+    #<editor-fold defaultstate="collapsed"  desc="Пользователи">
+      UserResource:
+        type: object
+        required:
+          - id
+          - name
+          - surname
+          - patronymic
+          - email
+          - phoneNumber
+          - role
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+          surname:
+            type: string
+          patronymic:
+            type: string
+          email:
+            type: string
+          phoneNumber:
+            type: string
+          role:
+            $ref: '#components/schemas/NameValueResource'
+    #</editor-ford>
+    #<editor-fold defaultstate="collapsed"  desc="Разное">
+      NameValueResource:
+        type: object
+        required:
+          - name
+          - value
+        properties:
+          name:
+            type: string
+          value:
+            oneOf:
+              - type: integer
+              - type: string
