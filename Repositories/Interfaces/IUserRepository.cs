@@ -14,6 +14,8 @@ namespace shop_backend.Repositories.Interfaces
 
         Task<User> GetByToken(string token);
 
+        Task<User> GetByEmail(string email);
+
         Task<User> Update(User entity);
 
         Task<bool> Delete(User entity);

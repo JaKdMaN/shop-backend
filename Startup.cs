@@ -8,8 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using shop_backend.Configurations;
 using shop_backend.Database;
-using System.Text;
-using System;
+using shop_backend.Http.Middleware;
 
 namespace shop_backend
 {
@@ -44,6 +43,7 @@ namespace shop_backend
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
+            app.UseMiddleware<Auth>();
             app.UseRouting();
 
             app.UseAuthentication();

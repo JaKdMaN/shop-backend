@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using shop_backend.Models;
 
 namespace shop_backend.Database
@@ -10,5 +9,6 @@ namespace shop_backend.Database
 
         public DbSet<User> users { get; set; }
         public DbSet<UserRole> userRoles { get; set; }
+        public DbSet<UserAddress> userAddresses { get; set; }
     }
 }

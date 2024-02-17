@@ -1,5 +1,6 @@
-﻿using shop_backend.Http.Resources.Auth;
+﻿using shop_backend.Http.Resources.Address;
 using shop_backend.Http.Resources.Misc;
+using System.Collections.Generic;
 
 namespace shop_backend.Http.Resources.User
 {
@@ -18,5 +19,7 @@ namespace shop_backend.Http.Resources.User
         public string PhoneNumber { get; set; }
 
         public NameValueResource Role { get; set; }
+
+        public ICollection<AddressResource> Adresses { get; set; }
     }
 }

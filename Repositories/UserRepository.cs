@@ -12,7 +12,7 @@ namespace shop_backend.Repositories
 
         private readonly ShopDbContext _db;
 
-        public UserRepository(ShopDbContext db) 
+        public UserRepository(ShopDbContext db)
         {
             _db = db;
         }
@@ -27,17 +27,33 @@ namespace shop_backend.Repositories
 
         public IQueryable<User> GetAll()
         {
-            return _db.users.Include(u => u.UserRole);
+            return _db.users
+                .Include(u => u.UserRole)
+                .Include(u => u.UserAddresses);
         }
 
         public async Task<User> GetById(int id)
         {
-            return await _db.users.Include(u => u.UserRole).FirstOrDefaultAsync(user => user.Id == id);
+            return await _db.users
+                .Include(u => u.UserRole)
+                .Include(u => u.UserAddresses)
+                .FirstOrDefaultAsync(user => user.Id == id);
         }
 
         public async Task<User> GetByToken(string token)
         {
-            return await _db.users.Include(u => u.UserRole).FirstOrDefaultAsync(u => u.RefreshToken == token);
+            return await _db.users
+                .Include(u => u.UserRole)
+                .Include(u => u.UserAddresses)
+                .FirstOrDefaultAsync(u => u.RefreshToken == token);
+        }
+
+        public async Task<User> GetByEmail(string email)
+        {
+            return await _db.users
+                .Include(u => u.UserRole)
+                .Include(u => u.UserAddresses)
+                .FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<User> Update(User entity)

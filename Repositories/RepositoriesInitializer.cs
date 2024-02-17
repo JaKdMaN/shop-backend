@@ -9,6 +9,7 @@ namespace shop_backend.Repositories
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IUserAddressRepository, UserAddressRepository>();
         }
     }
 }

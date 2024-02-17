@@ -11,7 +11,7 @@ namespace shop_backend.Repositories
     {
         private readonly ShopDbContext _db;
 
-        public UserRoleRepository(ShopDbContext db) 
+        public UserRoleRepository(ShopDbContext db)
         {
             _db = db;
         }

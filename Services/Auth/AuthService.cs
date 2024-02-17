@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using shop_backend.Exceptions;
 using shop_backend.Helpers;
@@ -50,8 +51,6 @@ namespace shop_backend.Services.Auth
 
             await _userRepository.Create(newUser);
 
-
-
             var userResource = _mapper.Map<UserResource>(newUser);
 
             return userResource;
@@ -87,7 +86,7 @@ namespace shop_backend.Services.Auth
             return true;
         }
 
-        public async Task<UserResource> Refresh (string jwtRefreshToken)
+        public async Task<UserResource> Refresh(string jwtRefreshToken)
         {
             if (string.IsNullOrEmpty(jwtRefreshToken))
             {
