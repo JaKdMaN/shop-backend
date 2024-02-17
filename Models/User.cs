@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace shop_backend.Models
 {
@@ -24,5 +24,7 @@ namespace shop_backend.Models
         public int UserRoleId { get; set; }
 
         public UserRole UserRole { get; set; }
+
+        public ICollection<UserAddress> UserAddresses { get; set; }
     }
 }

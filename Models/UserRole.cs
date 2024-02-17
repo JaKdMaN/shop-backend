@@ -8,6 +8,7 @@ namespace shop_backend.Models
 
         public string Name { get; set; }
 
+        // --------------- Связи --------------- //
         public ICollection<User> Users { get; set; }
     }
 }
